@@ -12,7 +12,7 @@ import GameplayKit
 class GameScene: SKScene {
     
     let COLORS = [UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow]
-    let IMAGE_NAMES = ["square_64x64", "square_128x64"]
+    let IMAGE_NAMES = ["square_256x64", "square_128x128", "shape_1", "shape_2", "shape_1_f", "shape_2_f"]
     let MAX_NODE_COUNT = 10
     
     private var spawnedBlocksCount = 0
@@ -139,14 +139,18 @@ class GameScene: SKScene {
     
     private func createBlock() -> SKSpriteNode {
         // add a block
-        let block = SKSpriteNode(imageNamed: IMAGE_NAMES.randomElement()!)
+        let imageName = IMAGE_NAMES.randomElement()!
+        let block = SKSpriteNode(imageNamed: imageName)
         block.color = COLORS.randomElement()!
         
         // use colorBlendFactor to "mix" the greyscale image and the selected color
         block.colorBlendFactor = 0.5
         
-        // TODO: implement physicsBodies for non-rectangle blocks
-        block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
+        if imageName.starts(with: "square") {
+            block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
+        } else {
+            block.physicsBody = SKPhysicsBody(texture: block.texture!, size: block.texture!.size())
+        }
         
         // spawn the block from top-center screen
         block.position = CGPoint(x: self.size.width / 2.0, y: self.size.height)
