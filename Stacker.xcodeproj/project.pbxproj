@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DE5D20C52337A8F300B8527E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D20C42337A8F300B8527E /* AppDelegate.swift */; };
-		DE5D20C72337A8F300B8527E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE5D20C62337A8F300B8527E /* GameScene.sks */; };
-		DE5D20C92337A8F300B8527E /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE5D20C82337A8F300B8527E /* Actions.sks */; };
 		DE5D20CB2337A8F300B8527E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D20CA2337A8F300B8527E /* GameScene.swift */; };
 		DE5D20CD2337A8F300B8527E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5D20CC2337A8F300B8527E /* GameViewController.swift */; };
 		DE5D20D02337A8F300B8527E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE5D20CE2337A8F300B8527E /* Main.storyboard */; };
@@ -20,8 +18,6 @@
 /* Begin PBXFileReference section */
 		DE5D20C12337A8F300B8527E /* Stacker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stacker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE5D20C42337A8F300B8527E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DE5D20C62337A8F300B8527E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		DE5D20C82337A8F300B8527E /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		DE5D20CA2337A8F300B8527E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		DE5D20CC2337A8F300B8527E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		DE5D20CF2337A8F300B8527E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -61,8 +57,6 @@
 			isa = PBXGroup;
 			children = (
 				DE5D20C42337A8F300B8527E /* AppDelegate.swift */,
-				DE5D20C62337A8F300B8527E /* GameScene.sks */,
-				DE5D20C82337A8F300B8527E /* Actions.sks */,
 				DE5D20CA2337A8F300B8527E /* GameScene.swift */,
 				DE5D20CC2337A8F300B8527E /* GameViewController.swift */,
 				DE5D20CE2337A8F300B8527E /* Main.storyboard */,
@@ -132,10 +126,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE5D20D02337A8F300B8527E /* Main.storyboard in Resources */,
-				DE5D20C72337A8F300B8527E /* GameScene.sks in Resources */,
 				DE5D20D22337A8F600B8527E /* Assets.xcassets in Resources */,
 				DE5D20D52337A8F600B8527E /* LaunchScreen.storyboard in Resources */,
-				DE5D20C92337A8F300B8527E /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +287,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
 				INFOPLIST_FILE = Stacker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,6 +306,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZXW8GTM6FG;
 				INFOPLIST_FILE = Stacker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
