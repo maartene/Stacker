@@ -173,11 +173,6 @@ class GameScene: SKScene {
         // Using SKTextureFilterMode.linear makes sure rotated sprites are "anti-aliased".
         block.texture?.filteringMode = .linear
         
-        // Motion blur
-        //let motionBlur = SKEffectNode()
-        //motionBlur.filter = CIFilter(name: "CIMotionBlur")
-        //block.addChild(motionBlur)
-        
         if imageName.starts(with: "square") {
             block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
         } else {
