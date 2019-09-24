@@ -2,7 +2,7 @@
 ## About
 Simple physics stack game for iOS based on SpriteKit. Usable as a demonstration of SpriteKit and Swift.
 
-* targets: iOS 14.2+;
+* targets: iOS 12.4+;
 * see GameScene.swift for actual game logic. Code contains comments;
 * Sprites made using Pixelmator. You require that program if you want to edit them.
 
