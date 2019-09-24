@@ -13,9 +13,10 @@ class GameScene: SKScene {
     
     // Blocks are defined by as shape and color.
     // COLORS and IMAGE_NAMES should have same size
-    // Duplicates to bias random selection towards blocks instead of shapes that look similar, but are flipped. 
+    // Duplicates to bias random selection towards blocks instead of shapes that look similar, but are flipped.
     let COLORS = [UIColor.red, UIColor.green, UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow, UIColor.blue, UIColor.yellow]
     let IMAGE_NAMES = ["square_256x64", "square_128x128", "square_256x64", "square_128x128", "shape_1", "shape_2", "shape_1_f", "shape_2_f"]
+    let LEVEL_GEOMETRY = ["Floor", "leftWall", "rightWall", "background"]
     let MAX_NODE_COUNT = 10
     
     private var spawnedBlocksCount = 0
@@ -37,12 +38,19 @@ class GameScene: SKScene {
     
     // note: this could also be created using a scene file
     private func createLevel() {
+        let background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
+        background.name = "background"
+        background.size = size
+        background.zPosition = -1
+        addChild(background)
+        
         // add a floor
         let floor = SKSpriteNode(color: SKColor.darkGray, size: CGSize(width: self.size.width, height: 32))
         floor.name = "Floor"
         floor.physicsBody = SKPhysicsBody(rectangleOf: floor.size)
         floor.physicsBody?.isDynamic = false
-        floor.position = CGPoint(x: self.size.width / 2.0, y: 32)
+        floor.position = CGPoint(x: self.size.width / 2.0, y: floor.size.height / 2.0)
         self.addChild(floor)
         
         // add walls
@@ -80,7 +88,7 @@ class GameScene: SKScene {
         case .began:
             if let node = self.nodes(at: scenePoint).first {
                 // make sure we are not trying to drag the level geometry
-                guard ["Floor", "leftWall", "rightWall"].contains(node.name) == false else {
+                guard LEVEL_GEOMETRY.contains(node.name ?? "") == false else {
                     return
                 }
                 
@@ -118,7 +126,7 @@ class GameScene: SKScene {
         
         if let node = self.nodes(at: scenePoint).first {
             // make sure we are not trying to drag the level geometry
-            guard ["Floor", "leftWall", "rightWall"].contains(node.name) == false else {
+            guard LEVEL_GEOMETRY.contains(node.name ?? "") == false else {
                 return
             }
             
@@ -165,6 +173,11 @@ class GameScene: SKScene {
         // Using SKTextureFilterMode.linear makes sure rotated sprites are "anti-aliased".
         block.texture?.filteringMode = .linear
         
+        // Motion blur
+        //let motionBlur = SKEffectNode()
+        //motionBlur.filter = CIFilter(name: "CIMotionBlur")
+        //block.addChild(motionBlur)
+        
         if imageName.starts(with: "square") {
             block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
         } else {
@@ -180,7 +193,7 @@ class GameScene: SKScene {
         // Called before each frame is rendered
         if spawnedBlocksCount < MAX_NODE_COUNT && currentTime > spawnTimer {
             self.addChild(createBlock())
-            spawnTimer = currentTime + Double.random(in: 0.25...0.75)
+            spawnTimer = currentTime + Double.random(in: 0.50...1.0)
             spawnedBlocksCount += 1
         }
     }
