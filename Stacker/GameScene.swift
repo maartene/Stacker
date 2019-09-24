@@ -11,8 +11,11 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let COLORS = [UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow]
-    let IMAGE_NAMES = ["square_256x64", "square_128x128", "shape_1", "shape_2", "shape_1_f", "shape_2_f"]
+    // Blocks are defined by as shape and color.
+    // COLORS and IMAGE_NAMES should have same size
+    // Duplicates to bias random selection towards blocks instead of shapes that look similar, but are flipped. 
+    let COLORS = [UIColor.red, UIColor.green, UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow, UIColor.blue, UIColor.yellow]
+    let IMAGE_NAMES = ["square_256x64", "square_128x128", "square_256x64", "square_128x128", "shape_1", "shape_2", "shape_1_f", "shape_2_f"]
     let MAX_NODE_COUNT = 10
     
     private var spawnedBlocksCount = 0
@@ -126,8 +129,11 @@ class GameScene: SKScene {
             // then we create two actions:
             // action 1: move the node up so it has ample space to rotate
             let move = SKAction.move(by: CGVector(dx: 0, dy: node.frame.height), duration: 0.25)
-            // action 2: rotate the node 90 degrees counter-clockwise.
-            let rotation = SKAction.rotate(byAngle: 0.5 * CGFloat.pi, duration: 0.5)
+            
+            // action 2: rotate to the next nearest 90 degrees angle (counter-clockwise).
+            // to calculate the target angle, we first need to find out how many whole 90 degree turns were already done.
+            let currentRotationIn90DegreeTurns = Int(node.zRotation / CGFloat.pi * 360) / 90
+            let rotation = SKAction.rotate(toAngle: CGFloat(currentRotationIn90DegreeTurns + 1) * 0.5 * CGFloat.pi, duration: 0.5)
             let sequence = SKAction.sequence([move, rotation])
             
             // the action has a completion handler, that makes the node dynamic again.
@@ -139,12 +145,25 @@ class GameScene: SKScene {
     
     private func createBlock() -> SKSpriteNode {
         // add a block
-        let imageName = IMAGE_NAMES.randomElement()!
+        let spriteIndex = Int.random(in: 0 ..< IMAGE_NAMES.count)
+        let imageName = IMAGE_NAMES[spriteIndex]
+        
+        let color: UIColor
+        if spriteIndex < COLORS.count {
+            color = COLORS[spriteIndex]
+        } else {
+            color = UIColor.white
+        }
+        
         let block = SKSpriteNode(imageNamed: imageName)
-        block.color = COLORS.randomElement()!
+        block.color = color
         
         // use colorBlendFactor to "mix" the greyscale image and the selected color
         block.colorBlendFactor = 0.5
+        
+        // *Sprite anti-aliasing*
+        // Using SKTextureFilterMode.linear makes sure rotated sprites are "anti-aliased".
+        block.texture?.filteringMode = .linear
         
         if imageName.starts(with: "square") {
             block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
