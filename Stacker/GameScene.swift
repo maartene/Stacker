@@ -19,7 +19,7 @@ class GameScene: SKScene {
     let LEVEL_GEOMETRY = ["Floor", "leftWall", "rightWall", "background"]
     let MAX_NODE_COUNT = 10
     
-    private var spawnedBlocksCount = 0
+    var spawnedBlocks = [SKSpriteNode]()
     private var draggedBlock: SKSpriteNode?
     private var spawnTimer = TimeInterval(exactly: 0)!
     
@@ -173,6 +173,7 @@ class GameScene: SKScene {
         // Using SKTextureFilterMode.linear makes sure rotated sprites are "anti-aliased".
         block.texture?.filteringMode = .linear
         
+        print(imageName)
         if imageName.starts(with: "square") {
             block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
         } else {
@@ -186,10 +187,11 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        if spawnedBlocksCount < MAX_NODE_COUNT && currentTime > spawnTimer {
-            self.addChild(createBlock())
+        if spawnedBlocks.count < MAX_NODE_COUNT && currentTime > spawnTimer {
+            let newBlock = createBlock()
+            self.addChild(newBlock)
+            spawnedBlocks.append(newBlock)
             spawnTimer = currentTime + Double.random(in: 0.50...1.0)
-            spawnedBlocksCount += 1
         }
     }
 }
